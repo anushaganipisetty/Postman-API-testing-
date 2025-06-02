@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "5ef24a5c-c3a3-439d-9340-476bd1be029a",
+		"name": "AceOnlienProducts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44646341"
+	},
+	"item": [
+		{
+			"name": "Get status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"<canvas id=\"myChart\" height=\"75\"></canvas>\r",
+							"\r",
+							"<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script> \r",
+							"\r",
+							"<script>\r",
+							"    var ctx = document.getElementById(\"myChart\");\r",
+							"\r",
+							"    var myChart = new Chart(ctx, {\r",
+							"        type: \"bar\",\r",
+							"        data: {\r",
+							"            labels: [],\r",
+							"            datasets: [{\r",
+							"                data: [],\r",
+							"                \r",
+							"                // Change these colours to customize the chart\r",
+							"                backgroundColor: [\"#003f5c\", \"#58508d\", \"#bc5090\", \"#ff6361\", \"#ffa600\"],\r",
+							"            }]\r",
+							"        },\r",
+							"        options: {\r",
+							"            legend: { display: false },\r",
+							"            title: {\r",
+							"                display: true,\r",
+							"                text: 'Product Prices'\r",
+							"            },\r",
+							"            scales: {\r",
+							"                xAxes: [{\r",
+							"                    display: true,\r",
+							"                    scaleLabel: {\r",
+							"                        display: true,\r",
+							"                        labelString: 'Products'\r",
+							"                    }\r",
+							"                }],\r",
+							"                yAxes: [{\r",
+							"                    display: true,\r",
+							"                    scaleLabel: {\r",
+							"                        display: true,\r",
+							"                        labelString: 'Price'\r",
+							"                    }\r",
+							"                }]\r",
+							"            }\r",
+							"        }\r",
+							"\r",
+							"    });\r",
+							"\r",
+							"    // Access the data passed to pm.visualizer.set() from the JavaScript\r",
+							"    // code of the Visualizer template\r",
+							"    pm.getData(function (err, value) {\r",
+							"        myChart.data.datasets[0].data = value.response.map(product => product.price);\r",
+							"        myChart.data.labels = value.response.map(product => product.title);\r",
+							"        myChart.update();\r",
+							"    });\r",
+							"\r",
+							"</script>`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    var res = pm.response.json();\r",
+							"    \r",
+							"    var visualizerData = {\r",
+							"        \r",
+							"        // Labels take an array of strings\r",
+							"        labels: res.map(product => product.title),\r",
+							"        \r",
+							"        // Data takes an array of numbers\r",
+							"        data: res.map(product => product.price)\r",
+							"    };\r",
+							"\r",
+							"    return {response: visualizerData};\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n        \"title\": \"MBJ Women's Solid Short Sleeve Boat Neck V1 \",\r\n        \"price\": 9.85,\r\n        \"description\": \"95% RAYON 5% SPANDEX, Made in USA or Imported, Do Not Bleach, Lightweight fabric with great stretch for comfort, Ribbed on sleeves and neckline / Double stitching on bottom hem\",\r\n        \"category\": \"women's clothing\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://simple-grocery-store-api.glitch.me/products/:productId?product-label=true",
+					"protocol": "https",
+					"host": [
+						"simple-grocery-store-api",
+						"glitch",
+						"me"
+					],
+					"path": [
+						"products",
+						":productId"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "fresh-produce",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "Green Cabbage Organic",
+							"disabled": true
+						},
+						{
+							"key": "product-label",
+							"value": "true"
+						}
+					],
+					"variable": [
+						{
+							"key": "productId",
+							"value": "4643"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Request",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n        \"title\": \"MBJ Women's Solid Short Sleeve Boat Neck V1 \",\r\n        \"price\": 9.85,\r\n        \"description\": \"95% RAYON 5% SPANDEX, Made in USA or Imported, Do Not Bleach, Lightweight fabric with great stretch for comfort, Ribbed on sleeves and neckline / Double stitching on bottom hem\",\r\n        \"category\": \"women's clothing\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fakestoreapi.com/products",
+					"protocol": "https",
+					"host": [
+						"fakestoreapi",
+						"com"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"projectkey\":\"AOP\",\r\n\"testcasekey\": \"AOP-T2\",\r\n\"testcyclekey\": \"AOP-C1\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://anupdamoda.github.io/AceOnlineShoePortal/OnlineProducts.html/status",
+					"protocol": "https",
+					"host": [
+						"anupdamoda",
+						"github",
+						"io"
+					],
+					"path": [
+						"AceOnlineShoePortal",
+						"OnlineProducts.html",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "API Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://simple-grocery-store-api.glitch.me",
+					"protocol": "https",
+					"host": [
+						"simple-grocery-store-api",
+						"glitch",
+						"me"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
